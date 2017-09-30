@@ -107,6 +107,7 @@ if ( ! class_exists( 'SP_Post_Carousel' ) ) {
 		function init_actions() {
 			add_action( 'plugins_loaded', array( $this, 'load_text_domain' ) );
 			add_action( 'manage_sp_pc_shortcodes_posts_custom_column', array( $this, 'add_shortcode_form' ), 10, 2 );
+			add_action( 'activated_plugin', array( $this, 'redirect_help_page' ));
 		}
 
 		/**
@@ -272,6 +273,17 @@ if ( ! class_exists( 'SP_Post_Carousel' ) ) {
 			} // end switch
 
 		}
+
+		/**
+		 * Redirect after active
+		 * @param $plugin
+		 */
+		function redirect_help_page( $plugin ) {
+			if ( $plugin == SP_PC_BASENAME ) {
+				exit( wp_redirect( admin_url( 'edit.php?post_type=sp_pc_shortcodes&page=help' ) ) );
+			}
+		}
+
 
 	}
 }
